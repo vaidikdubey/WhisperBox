@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
                             { email: credentials?.identifier },
                             { username: credentials?.identifier },
                         ],
-                    });
+                    }).lean();
 
                     if (!user) throw new Error("No user found with this email");
 
@@ -37,7 +37,14 @@ export const authOptions: NextAuthOptions = {
                         user.password,
                     );
 
-                    if (isPasswordCorrect) return user;
+                    if (isPasswordCorrect)
+                        return {
+                            _id: user._id.toString(),
+                            username: user.username,
+                            email: user.email,
+                            isVerified: user.isVerified,
+                            isAcceptingMessage: user.isAcceptingMessage,
+                        } as User;
                     else throw new Error("Invalid credentials");
                 } catch (error) {
                     throw new Error(
@@ -51,7 +58,7 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token._id = user._id?.toString();
+                token._id = user._id;
                 token.isVerified = user.isVerified;
                 token.isAcceptingMessage = user.isAcceptingMessage;
                 token.username = user.username;
