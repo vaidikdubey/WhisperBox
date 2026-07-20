@@ -1,20 +1,30 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from "react-hook-form"
+import * as z from "zod"
+import Link from "next/link"
+import { useState } from "react";
+import { useDebounceValue } from "usehooks-ts";
+import { toast } from "sonner"
+import { useRouter } from "next/navigation";
 
-export default function Component() {
-    const { data: session } = useSession();
-    if (session) {
-        return (
-            <>
-                Signed in as {session.user.email} <br />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        );
-    }
-    return (
-        <>
-            Not signed in <br />
-            <button className="bg-pink-500 px-3 py-1 w-fit m-4 rounded-lg text-2xl" onClick={() => signIn()}>Sign in</button>
-        </>
-    );
+const Page = () => {
+    const router = useRouter()
+
+    const [username, setUsername] = useState("")
+    const [usernameMessage, setUsernameMessage] = useState("")
+    const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const debouncedUsername = useDebounceValue(username, 300)
+
+    // toast("Event has been created.")
+
+    //zod implementation
+
+  return (
+    <div>page</div>
+  )
 }
+
+export default Page
