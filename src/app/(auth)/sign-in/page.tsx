@@ -11,6 +11,34 @@ import { signUpSchema } from "@/schemas/signUpSchema";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 
+//Shadcn components
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+import {
+  FieldGroup,
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+} from "@/components/ui/field"
+
+import {
+  InputGroup,
+  InputGroupTextarea,
+  InputGroupAddon,
+  InputGroupText,
+} from "@/components/ui/input-group"
+
 const Page = () => {
     const router = useRouter();
 
@@ -85,7 +113,137 @@ const Page = () => {
         }
     };
 
-    return <div>page</div>;
+    return <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+            <div className="text-center">
+                <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Join WhisperBox</h1>
+                <p className="mb-4">Sign Up to start your anonymous adventure</p>
+            </div>
+
+        {/* Signup Form */}
+        <Card className="w-full sm:max-w-md">
+            <CardHeader>
+                <CardTitle>Bug Report</CardTitle>
+                <CardDescription>
+                Help us improve by reporting bugs you encounter.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+                <FieldGroup>
+                    <Controller
+                    name="username"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                            Username
+                        </FieldLabel>
+                        <Input
+                            {...field}
+                            id="form-rhf-demo-title"
+                            aria-invalid={fieldState.invalid}
+                            placeholder="Login button not working on mobile"
+                            autoComplete="off"
+                        />
+                        {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                        )}
+                        </Field>
+                    )}
+                    />
+                    <Controller
+                    name="email"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-description">
+                            Description
+                        </FieldLabel>
+                        <InputGroup>
+                            <InputGroupTextarea
+                            {...field}
+                            id="form-rhf-demo-description"
+                            placeholder="I'm having an issue with the login button on mobile."
+                            rows={6}
+                            className="min-h-24 resize-none"
+                            aria-invalid={fieldState.invalid}
+                            />
+                            <InputGroupAddon align="block-end">
+                            <InputGroupText className="tabular-nums">
+                                {field.value.length}/100 characters
+                            </InputGroupText>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        <FieldDescription>
+                            Include steps to reproduce, expected behavior, and what
+                            actually happened.
+                        </FieldDescription>
+                        {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                        )}
+                        </Field>
+                    )}
+                    />
+                    <Controller
+                    name="password"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-description">
+                            Description
+                        </FieldLabel>
+                        <InputGroup>
+                            <InputGroupTextarea
+                            {...field}
+                            id="form-rhf-demo-description"
+                            placeholder="I'm having an issue with the login button on mobile."
+                            rows={6}
+                            className="min-h-24 resize-none"
+                            aria-invalid={fieldState.invalid}
+                            />
+                            <InputGroupAddon align="block-end">
+                            <InputGroupText className="tabular-nums">
+                                {field.value.length}/100 characters
+                            </InputGroupText>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        <FieldDescription>
+                            Include steps to reproduce, expected behavior, and what
+                            actually happened.
+                        </FieldDescription>
+                        {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                        )}
+                        </Field>
+                    )}
+                    />
+                </FieldGroup>
+                </form>
+            </CardContent>
+            <CardFooter>
+                <Field orientation="horizontal">
+                <Button type="button" variant="outline" onClick={() => form.reset()}>
+                    Reset
+                </Button>
+                <Button type="submit" form="form-rhf-demo">
+                    Submit
+                </Button>
+                </Field>
+            </CardFooter>
+        </Card>
+        </div>
+    </div>;
 };
 
 export default Page;
+
+// New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+
+
+// LongPathsEnabled : 1
+// PSPath           : Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem
+// PSParentPath     : Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control
+// PSChildName      : FileSystem
+// PSDrive          : HKLM
+// PSProvider       : Microsoft.PowerShell.Core\Registry
