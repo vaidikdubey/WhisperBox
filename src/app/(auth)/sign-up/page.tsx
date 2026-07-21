@@ -102,7 +102,7 @@ const Page = () => {
             const errorMessage =
                 axiosError.response?.data.message || "Error in signup";
 
-            toast.error("Signup failed", {
+            toast.error("Error", {
                 description: errorMessage,
             });
         } finally {
