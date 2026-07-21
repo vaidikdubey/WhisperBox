@@ -120,7 +120,7 @@ const Page = () => {
                 </div>
 
                 {/* Signup Form */}
-                <Card className="w-full sm:max-w-md">
+                <Card className="w-full sm:max-w-md tracking-tight">
                     <CardHeader>
                         <CardTitle>Enter your details</CardTitle>
                         <CardDescription>
