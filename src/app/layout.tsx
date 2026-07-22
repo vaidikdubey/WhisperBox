@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import Navbar from "@/components/Navbar";
 
 const jetbrainsMonoHeading = JetBrains_Mono({
     subsets: ["latin"],
@@ -47,6 +48,7 @@ export default function RootLayout({
         >
             <AuthProvider>
                 <body className="min-h-full flex flex-col">
+                    <Navbar />
                     {children}
                     <Toaster />
                 </body>
