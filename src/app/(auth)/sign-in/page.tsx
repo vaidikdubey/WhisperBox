@@ -51,8 +51,6 @@ const Page = () => {
             password: data.password,
         });
 
-        console.log("Result of signin: ", result);
-
         if (result?.error) {
             if (result.error == "CredentialsSignin") {
                 toast.error("Error", {

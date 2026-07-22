@@ -119,7 +119,14 @@ const UserDashboard = () => {
     };
 
     const { username } = session?.user as unknown as User;
-    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+
+    const [baseUrl, setBaseUrl] = useState("");
+
+    useEffect(() => {
+        if (window !== undefined) {
+            setBaseUrl(`${window.location.protocol}//${window.location.host}`);
+        }
+    }, []);
     const profileUrl = `${baseUrl}/u/${username}`;
 
     const copyToClipboard = () => {
