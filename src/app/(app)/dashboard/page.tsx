@@ -118,18 +118,18 @@ const UserDashboard = () => {
         }
     };
 
-    const { username } = session?.user as unknown as User;
+    const username = session?.user.username;
 
-    const [baseUrl, setBaseUrl] = useState("");
-
-    useEffect(() => {
-        if (window !== undefined) {
-            setBaseUrl(`${window.location.protocol}//${window.location.host}`);
-        }
-    }, []);
-    const profileUrl = `${baseUrl}/u/${username}`;
+    const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL ||
+        (typeof window !== "undefined"
+            ? `${window?.location.protocol}//${window?.location.host}`
+            : "");
+    const profileUrl = baseUrl ? `${baseUrl}/u/${username}` : "";
 
     const copyToClipboard = () => {
+        if (!profileUrl) return;
+
         navigator.clipboard.writeText(profileUrl);
 
         toast.success("Success", {
@@ -137,8 +137,16 @@ const UserDashboard = () => {
         });
     };
 
-    if (!session || !session.user) {
-        return <div>Please sign in to view this page</div>;
+    if (!session || !session.user || !username) {
+        return (
+            <div className="flex items-center justify-center min-h-50">
+                <p className="text-muted-foreground">
+                    {!session?.user
+                        ? "Please sign in to view this page."
+                        : "Loading user profile..."}
+                </p>
+            </div>
+        );
     }
 
     return (

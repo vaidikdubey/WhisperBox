@@ -64,7 +64,7 @@ const Page = () => {
         }
 
         setIsSubmitting(false);
-        if (result?.url) {
+        if (result?.ok) {
             router.replace("/dashboard");
         }
     };

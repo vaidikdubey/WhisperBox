@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
-export { default } from "next-auth/middleware"; //Apply middleware everywhere
 import { getToken } from "next-auth/jwt";
 
 export async function proxy(request: NextRequest) {
@@ -9,10 +7,10 @@ export async function proxy(request: NextRequest) {
 
     if (
         token &&
-        (url.pathname.startsWith("/sign-in") ||
+        (url.pathname === "/" ||
+            url.pathname.startsWith("/sign-in") ||
             url.pathname.startsWith("/sign-up") ||
-            url.pathname.startsWith("/verify") ||
-            url.pathname.startsWith("/"))
+            url.pathname.startsWith("/verify"))
     ) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
     }
