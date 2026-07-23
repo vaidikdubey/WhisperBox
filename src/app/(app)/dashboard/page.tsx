@@ -1,6 +1,6 @@
 "use client";
 
-import { Message, User } from "@/model/User";
+import { Message} from "@/model/User";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Types } from "mongoose";

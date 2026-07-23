@@ -84,6 +84,8 @@ export async function GET(request: Request) {
     try {
         const foundUser = await UserModel.findById(userId);
 
+        console.log(foundUser);
+
         if (!foundUser) {
             return Response.json(
                 {
@@ -97,9 +99,8 @@ export async function GET(request: Request) {
             {
                 success: true,
                 isAcceptingMessages: foundUser.isAcceptingMessage,
-                message: "Failed to update user status to accept messages",
             },
-            { status: 400 },
+            { status: 200 },
         );
     } catch (error) {
         console.error("Error getting message acceptance status", error);

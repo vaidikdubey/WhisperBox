@@ -20,7 +20,7 @@ const Navbar = () => {
                 {session ? (
                     <>
                         <span className="mr-4">
-                            Welcome, ${user?.username || user?.email}
+                            Welcome, <span className="font-bold capitalize underline underline-offset-4">{user?.username || user?.email}</span>
                         </span>
                         <Button
                             onClick={() => signOut()}
