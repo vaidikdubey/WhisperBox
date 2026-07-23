@@ -84,8 +84,6 @@ export async function GET(request: Request) {
     try {
         const foundUser = await UserModel.findById(userId);
 
-        console.log(foundUser);
-
         if (!foundUser) {
             return Response.json(
                 {

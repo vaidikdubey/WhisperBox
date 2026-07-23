@@ -1,6 +1,6 @@
 "use client";
 
-import { Message} from "@/model/User";
+import { Message } from "@/model/User";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Types } from "mongoose";
@@ -13,7 +13,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, RefreshCcw } from "lucide-react";
+import { Copy, Loader2, RefreshCcw } from "lucide-react";
 import MessageCard from "@/components/MessageCard";
 
 const UserDashboard = () => {
@@ -164,7 +164,13 @@ const UserDashboard = () => {
                         disabled
                         className="input input-bordered w-full p-2 mr-2"
                     />
-                    <Button onClick={copyToClipboard}>Copy</Button>
+                    <Button
+                        onClick={copyToClipboard}
+                        variant="ghost"
+                        size="icon"
+                    >
+                        <Copy />
+                    </Button>
                 </div>
             </div>
 
