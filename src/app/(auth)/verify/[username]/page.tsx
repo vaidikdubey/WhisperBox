@@ -56,8 +56,6 @@ const VerifyAccount = () => {
                 setTimeout(() => router.replace("/sign-in"), 500);
             }
         } catch (error) {
-            console.error("Error in signup of user", error);
-
             const axiosError = error as AxiosError<ApiResponse>;
 
             const errorMessage =
