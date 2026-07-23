@@ -3,13 +3,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import mongoose from "mongoose";
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { messageid: string | mongoose.Types.ObjectId } },
+    context: { params: Promise<{ messageid: string}> },
 ) {
-    const messageId = params.messageid;
+    const messageId = (await context.params).messageid;
 
     await dbConnect();
 
