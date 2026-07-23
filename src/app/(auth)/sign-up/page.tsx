@@ -92,7 +92,7 @@ const Page = () => {
                     description: response.data.message,
                 });
 
-                setTimeout(() => router.replace(`/verify/${username}`), 500);
+                router.replace(`/verify/${username}`);
             }
         } catch (error) {
             console.error("Error in signup of user", error);
