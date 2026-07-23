@@ -79,10 +79,6 @@ const Page = () => {
     const fetchAISuggestionMessages = async () => {
         try {
             await complete(" ");
-
-            toast.success("Success", {
-                description: "Messages generated",
-            });
         } catch (error) {
             console.error("Error generating message ", error);
             toast.error("Error", {
