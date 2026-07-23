@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Types } from "mongoose";
 import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { acceptMessagesSchema } from "@/schemas/acceptMessageSchema";
 import axios, { AxiosError } from "axios";
@@ -32,7 +32,7 @@ const UserDashboard = () => {
         resolver: zodResolver(acceptMessagesSchema),
     });
 
-    const { register, watch, setValue } = form;
+    const { watch, setValue, reset } = form;
     const acceptMessages = watch("acceptMessages");
 
     //API call optimization using useCallback hook for memoization
@@ -41,7 +41,9 @@ const UserDashboard = () => {
 
         try {
             const response = await axios.get("/api/accept-messages");
-            setValue("acceptMessages", response.data.isAcceptingMessage);
+            reset({
+                acceptMessages: response.data.isAcceptingMessages,
+            });
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
 
@@ -53,7 +55,7 @@ const UserDashboard = () => {
         } finally {
             setIsSwitchLoading(false);
         }
-    }, [setValue]);
+    }, [reset]);
 
     const fetchMessages = useCallback(
         async (refresh: boolean = false) => {
@@ -63,6 +65,8 @@ const UserDashboard = () => {
             try {
                 const response =
                     await axios.get<ApiResponse>("/api/get-messages");
+
+                    console.log(response.data)
 
                 setMessages(response.data.messages || []);
 
@@ -175,11 +179,19 @@ const UserDashboard = () => {
             </div>
 
             <div className="mb-4">
-                <Switch
-                    {...register("acceptMessages")}
-                    checked={acceptMessages}
-                    onCheckedChange={handleSwitchChange}
-                    disabled={isSwitchLoading}
+                <Controller
+                    name="acceptMessages"
+                    control={form.control}
+                    render={({ field }) => (
+                        <Switch
+                            checked={field.value}
+                            onCheckedChange={(checked) => {
+                                field.onChange(checked);
+                                handleSwitchChange();
+                            }}
+                            disabled={isSwitchLoading}
+                        />
+                    )}
                 />
                 <span className="ml-2">
                     Accept Messages: {acceptMessages ? "On" : "Off"}

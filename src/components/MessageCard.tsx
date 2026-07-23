@@ -1,12 +1,6 @@
 "use client";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -24,31 +18,39 @@ import { Message } from "@/model/User";
 import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
-import {Types} from "mongoose"
+import { Types } from "mongoose";
 
 type MessageCardProps = {
-  message: Message,
-  onMessageDelete: (messageId: Types.ObjectId) => void
-}
+    message: Message;
+    onMessageDelete: (messageId: Types.ObjectId) => void;
+};
 
-const MessageCard = ({ message, onMessageDelete}: MessageCardProps) => {
-  const handleDeleteConfirm = async () => {
-    const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
+const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
+    const handleDeleteConfirm = async () => {
+        const response = await axios.delete<ApiResponse>(
+            `/api/delete-message/${message._id}`,
+        );
 
-    toast.success("Success", {
-      description: response.data.message
-    })
+        toast.success("Success", {
+            description: response.data.message,
+        });
 
-    onMessageDelete(message._id)
-  }
+        onMessageDelete(message._id);
+    };
+
+    console.log(message);
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>Card Title</CardTitle>
+            <CardHeader className="flex justify-between items-center">
+                <CardTitle>{message.content}</CardTitle>
                 <AlertDialog>
                     <AlertDialogTrigger
-                        render={<Button variant="destructive"><X className="w-5 h-5" /></Button>}
+                        render={
+                            <Button variant="destructive" size="icon">
+                                <X />
+                            </Button>
+                        }
                     />
                     <AlertDialogContent>
                         <AlertDialogHeader>
@@ -63,13 +65,16 @@ const MessageCard = ({ message, onMessageDelete}: MessageCardProps) => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
+                            <AlertDialogAction onClick={handleDeleteConfirm}>
+                                Continue
+                            </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-                <CardDescription>Card Description</CardDescription>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardFooter>
+                Sent At: {new Date(message.createdAt).toLocaleDateString()}
+            </CardFooter>
         </Card>
     );
 };

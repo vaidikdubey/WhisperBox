@@ -25,11 +25,13 @@ export async function GET(request: Request): Promise<Response> {
 
     try {
         const user = await UserModel.aggregate([
-            { $match: { id: userId } },
+            { $match: { _id: userId } },
             { $unwind: "$messages" },
             { $sort: { "messages.createdAt": -1 } },
             { $group: { _id: "$_id", messages: { $push: "$messages" } } },
         ]);
+
+        console.log(user)
 
         if (!user) {
             return Response.json(
