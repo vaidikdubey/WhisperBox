@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google";
-import { streamText } from "ai";
+import { streamText, createTextStreamResponse, toTextStream } from "ai";
 import { NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -16,7 +16,9 @@ export async function POST(req: Request) {
         });
 
         // This handles headers and streams the text data response safely
-        return result.toTextStreamResponse();
+        return createTextStreamResponse({
+            stream: toTextStream({ stream: result.stream }),
+        });
     } catch (error) {
         console.error("An unexpected error occurred:", error);
         return NextResponse.json(
